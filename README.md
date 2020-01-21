@@ -1,9 +1,15 @@
-[![Create a Slack Account with us](https://img.shields.io/badge/Create_Slack_Account-The_Carpentries-071159.svg)](https://swc-slack-invite.herokuapp.com/) 
-[![Slack Status](https://img.shields.io/badge/Slack_Channel-swc--shell-E01563.svg)](https://swcarpentry.slack.com/messages/C9X3XTHJ8) 
+[![Create a Slack Account with us](https://img.shields.io/badge/Create_Slack_Account-The_Carpentries-071159.svg)](https://swc-slack-invite.herokuapp.com/)
+[![Slack Status](https://img.shields.io/badge/Slack_Channel-swc--shell-E01563.svg)](https://swcarpentry.slack.com/messages/C9X3XTHJ8)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3266823.svg)](https://doi.org/10.5281/zenodo.3266823)
 
-shell-novice
+shell-novice (SCS tutorial at MSI 1/22/20)
 ============
+To get the materials specific to todays tutorial, open 'terminal' (command spacebar is fast)
+```
+cd ~
+git clone https://github.com/jthmiller/shell-novice.git
+cd shell-novice
+```
 
 An introduction to the Unix shell for people who have never used the command line before.
 Please see <https://swcarpentry.github.io/shell-novice/> for a rendered version of this material,
