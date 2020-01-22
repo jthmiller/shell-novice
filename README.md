@@ -2,10 +2,14 @@
 [![Slack Status](https://img.shields.io/badge/Slack_Channel-swc--shell-E01563.svg)](https://swcarpentry.slack.com/messages/C9X3XTHJ8)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3266823.svg)](https://doi.org/10.5281/zenodo.3266823)
 
-shell-novice (adapted from SWC for SCS tutorial at MSI 1/22/20)
+shell-novice (adapted from SWC for SCS tutorial at MSI 1/22/20)  
+
 
 ============
+
+
 To get the materials specific to todays tutorial, open 'terminal' (command spacebar is fast)
+
 ```
 cd ~
 git clone https://github.com/jthmiller/shell-novice.git
