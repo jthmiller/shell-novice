@@ -5,10 +5,10 @@ exercises: NA
 questions:
 
 - At this point in the SC intro to shell, learners have had
-  - An intro to basic shell commands like ls, head, cp, cd, rm, ect...
-  - Navigating between directories
-  - Very basic pipes and know some special characters (like wildcard expansion)
-  - An on the fly loop (nested loop even)
+- An intro to basic shell commands like ls, head, cp, cd, rm, ect...
+- Navigating between directories
+- Very basic pipes and know some special characters (like wildcard expansion)
+- An on the fly loop (nested loop even)
 
 objectives:
 - "Write a shell script that runs on a fixed set of files."
@@ -26,35 +26,35 @@ keypoints:
 ---
 
 
-## BACKGROUND
-I chose 'writing shell scripts' because I think that it is an important lesson for setting good reproducibility habits and encourages efficiency- and for submitting bash jobs to the scheduler
+### BACKGROUND
+- I chose 'writing shell scripts' because I think that it is an important lesson for setting good reproducibility habits and encourages efficiency- and for submitting bash jobs to the scheduler
 
-Up to this point the learners would have been exposed to navigating directories, running basic commands, a little looping, piping, and wildcard/variable expansion.
+- Up to this point the learners would have been exposed to navigating directories, running basic commands, a little looping, piping, and wildcard/variable expansion.
 
-BUT we've been limited to running builtin commands ran directly on the command line.
+- BUT we've been limited to running builtin commands ran directly on the command line.
 
-The idea with this lesson is to introduce the concept of shell scripts being executed line-by-line in a bash environment.
+- The idea with this lesson is to introduce the concept of shell scripts being executed line-by-line in a bash environment.
 
-We start by building their first shell script.
+- We start by building their first shell script.
 
-## START
-Now that we have a few commands and for loops in our toolkit, we can start using these tools to start processing and analyzing data.
+### START
+- Now that we have a few commands and for loops in our toolkit, we can start using these tools to start processing and analyzing data.
 
-And rather than relying on other people to figure how we did our analyses(and to spare them the time that you had to trouble shoot)   
+- And rather than relying on other people to figure how we did our analyses(and to spare them the time that you had to trouble shoot)   
 
-We put together text files lines of commands- that when executed line-by-line- recreates the steps that you went through.
+- We can put together text file of the commands (and the order)- that when executed line-by-line- recreates the steps that you went through.
 
-And this is what basic bash or **shell script** are: multiple lines of commands that call bash commands or other programs  
+- And this is what basic bash or **shell script** are: multiple lines of commands that call bash commands or other programs  
 
-They can be shared with other researchers- or with a little bit of extra instructions, be executed on powerful supercomputer clusters like mesabi.
+- They can be shared with other researchers- or with a little bit of extra instructions, be executed on powerful supercomputer clusters like mesabi.
 
-This is a part of why bash is a powerful and flexible programming environment to learn.
+- This is a part of why bash is a powerful and flexible programming environment to learn.
 
-It's fast and everywhere. Ultimately, we could write shell scripts that re-run all the operations again later by typing a single command on different machines.
+- It's fast and everywhere. Ultimately, we could write shell scripts that re-run all the operations again later by typing a single command on different machines.
 
-We will start by making our first shell script in the folder containing the data that it will be used for.
+- We will start by making our first shell script in the folder containing the data that it will be used for.
 
-Change directories to the `molecules/` folder and creating a new file, `middle.sh`.
+- Change directories to the `molecules/` folder and creating a new file, `middle.sh`.
 
 In the shell-novice folder:
 
@@ -70,37 +70,37 @@ If that didn't get you there, try:
 cd $HOME/shell-novice/data-shell/molecules
 ```
 
-The command `vim middle.sh` opens the file `middle.sh` within the text editor 'vim'
-(which runs within our shell environment).
+- The command `vim middle.sh` opens the file `middle.sh` within the text editor 'vim' (which runs within our shell environment).
 - If the file does not exist, vim and nano create it.
 - If it does exist, you can edit the file.
 
-In vim, hit 'i' to begin typing.
+- In vim, hit 'i' to begin typing.
 
-We will insert commands that we are familiar with: head and tail.
+- We will insert commands that we are familiar with: head and tail.
 
-We are going to write our shell script to use these head and tail to output lines 11-15 of the file `octane.pdb`
+- We are going to write our shell script to use these head and tail to output lines 11-15 of the file `octane.pdb`
 
 ~~~
 head -n 15 octane.pdb | tail -n 5
 ~~~
 {: .source}
 
-We are *not* running it as a command by writing it to a file:
-we are putting the commands to make a shell script.
+- We are *not* running it as a command by writing it to a file: we are putting the commands to make a shell script.
 
 Once we've typed it, save the file in vim by:
 1. hitting escape
 2. then `Shift-:` to tell vim that we are passing commands rather than typing,
 3. and type `wq` and hitting enter
 
-Check that the directory `molecules` now contains a file called `middle.sh`.
+- Check that the directory `molecules` now contains a file called `middle.sh`.
 
-If this didn't go well and you don't see it, you can use:
+- If this didn't go well and you don't see it, you can use:
+```
 echo 'head -n 15 octane.pdb | tail -n 5' > middle.sh
+```
 
-Once we have saved the file,we can ask the shell to execute the commands it contains.
-Our shell is called `bash`, so we run the following command:
+- Once we have saved the file,we can ask the shell to execute the commands it contains.
+- Our shell is called `bash`, so we run the following command:
 
 Execute the script in a bash environment by typing:
 ~~~
@@ -119,29 +119,29 @@ ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
 
 - New macs might use a more recent version of shell, called zsh. But bash should still work
 
-When you call the `bash` command, terminal is running the script in the first position in a bash environment that knows all of the bash commands.
+- When you call the `bash` command, terminal is running the script in the first position in a bash environment that knows all of the bash commands.
 
 -To be more flexible:
 
-If we want to select lines from a different,we could edit `middle.sh` each time to change the filename.
+- If we want to select lines from a different,we could edit `middle.sh` each time to change the filename.
 That would probably take longer than typing the command out again.
 
-Instead, let's edit `middle.sh` to make it more versatile, and accept a user designated file instead:
+- Instead, let's edit `middle.sh` to make it more versatile, and accept a user designated file instead:
 
 ~~~
 $ vim middle.sh
 ~~~
 {: .language-bash}
 
-Now, within "vim", replace the text `octane.pdb` with the special variable called `$1`:
+- Now, within "vim", replace the text `octane.pdb` with the special variable called `$1`:
 
 ~~~
 head -n 15 "$1" | tail -n 5
 ~~~
 {: .output}
 
-Inside a shell script,
-`$1` means 'the first filename (or other argument) on the command line'.
+- Inside a shell script,`$1` means 'the first filename (or other argument) on the command line'.
+
 We can now run our script like this:
 
 ~~~
@@ -181,9 +181,9 @@ ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
 > we surround `$1` with double-quotes.
 {: .callout}
 
-HOWEVER- we still need to edit `middle.sh` each time we want to adjust the range of lines
+- HOWEVER- we still need to edit `middle.sh` each time we want to adjust the range of lines
 
-Let's fix that by using the special variables `$2` and `$3` to stand in for the
+- Let's fix that by using the special variables `$2` and `$3` to stand in for the
 number of lines to be passed to `head` and `tail` respectively:
 
 ~~~
@@ -394,7 +394,7 @@ rather than the names of the files that were processed.
 
 One thing to note about the script is that
 it is usually better when it is portable and adaptable.
-IT could have written it as:
+IT could have written more specifically as:
 
 ~~~
 # Calculate stats for Site A and Site B data files.
@@ -406,7 +406,7 @@ done
 ~~~
 {: .language-bash}
 
-The advantage is that this always selects the right files:
+The advantage of one is that this always selects the right files:
 and do not have to remember to exclude the 'Z' files.
 The disadvantage is that it *always* selects just those files and it can't run on all files
 (including the 'Z' files),without editing the script.
@@ -415,7 +415,7 @@ To be even more reusable and portable, the script can be written to check for co
 and use `NENE*[AB].txt` if none were provided. (if statement)
 Of course, this introduces another tradeoff between flexibility and complexity.
 
-In this lesson, we
+For this lesson, we
 - "Wrote a basic shell script that ran on a single file name"
 - "We ran that shell script from the command line with the bash command"
 - "We then added the ability to pass positional arguments to the script with $1 and $2"
@@ -424,4 +424,6 @@ In this lesson, we
 - "And remember to use quotes to carefully expand variables"
 
 Next would be the final lesson of 'intro to unix'- which is focused on find and grep.
+
+
 ---
