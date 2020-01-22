@@ -1,22 +1,22 @@
 ---
 title: "Shell Scripts"
-
+teaching: 25
+exercises: 20
+questions:
 - I chose 'writing shell scripts' because I think that it is an important lesson for setting good reproducibility habits and encourages efficiency.
+- At this point in the SC intro to shell, learners have had
+  - An intro to basic shell commands like ls, head, cp, cd, rm, ect...
+  - Navigating between directories
+  - Very basic pipes and know some special characters (like wildcard expansion)
+  - An on the fly loop (nested loop even)
 
-At this point in the SC intro to shell, learners have had:
-- An intro to basic shell commands like ls, head, cp, cd, rm, ect...
-- Navigating between directories
-- Very basic pipes and know some special characters (like wildcard expansion)
-- An on the fly loop (nested loop even)
-  - IT the logical progression is
-
-Objective is to:
+objectives:
 - "Write a shell script that runs on a fixed set of files."
 - "Run a shell script from the command line."
 - "Pass their shell script positional arguments"
 - "Create pipelines."
 
-Key points that they will learn:
+keypoints:
 - "How to save commands and history to text"
 - "Run their code by calling `bash filename`"
 - "Expand positional parameters with `$@` and wildcard/glob"
