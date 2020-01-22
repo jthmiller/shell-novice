@@ -2,7 +2,8 @@
 [![Slack Status](https://img.shields.io/badge/Slack_Channel-swc--shell-E01563.svg)](https://swcarpentry.slack.com/messages/C9X3XTHJ8)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3266823.svg)](https://doi.org/10.5281/zenodo.3266823)
 
-shell-novice (SCS tutorial at MSI 1/22/20)
+shell-novice (adapted from SWC for SCS tutorial at MSI 1/22/20)
+
 ============
 To get the materials specific to todays tutorial, open 'terminal' (command spacebar is fast)
 ```
@@ -12,7 +13,7 @@ cd shell-novice
 ```
 
 An introduction to the Unix shell for people who have never used the command line before.
-Please see <https://swcarpentry.github.io/shell-novice/> for a rendered version of this material,
+Please see <https://jthmiller.github.io/shell-novice/06-script/> for a rendered version of this material,
 [the lesson template documentation][lesson-example]
 for instructions on formatting, building, and submitting material,
 or run `make` in this directory for a list of helpful commands.
