@@ -1,45 +1,44 @@
 ---
 title: "Shell Scripts"
 
-Learners have had:
+- I chose 'writing shell scripts' because I think that it is an important lesson for setting good reproducibility habits and encourages efficiency.
+
+At this point in the SC intro to shell, learners have had:
 - An intro to basic shell commands like ls, head, cp, cd, rm, ect...
 - Navigating between directories
 - Very basic pipes and know some special characters (like wildcard expansion)
 - An on the fly loop (nested loop even)
   - IT the logical progression is
-questions:
-- "How save loops and write flexible code that can be reused?"
-- "How can I save and re-use commands?"
-objectives:
-- "Write a shell script that runs a command or series of commands for a fixed set of files."
+
+Objective is to:
+- "Write a shell script that runs on a fixed set of files."
 - "Run a shell script from the command line."
-- "Write a shell script that operates on a set of files defined by the user on the command line."
-- "Create pipelines that include shell scripts you, and others, have written."
-keypoints:
-- "Save commands in files (usually called shell scripts) for re-use."
-- "`bash filename` runs the commands saved in a file."
-- "`$@` refers to all of a shell script's command-line arguments."
-- "`$1`, `$2`, etc., refer to the first command-line argument, the second command-line argument, etc."
-- "Place variables in quotes if the values might have spaces in them."
-- "Letting users decide what files to process is more flexible and more consistent with built-in Unix commands."
+- "Pass their shell script positional arguments"
+- "Create pipelines."
+
+Key points that they will learn:
+- "How to save commands and history to text"
+- "Run their code by calling `bash filename`"
+- "Expand positional parameters with `$@` and wildcard/glob"
+- "`$1`, `$2` to call specific positional parameters."
+- "To use quotes to carefully expand variables"
+- "Writing cod that is more flexible and more consistent with built-in Unix commands."
 ---
 
-I chose 'writing shell scripts' because it is often skipped but is important
-to set good habits that encourages reproducibility and reuse of code.
 
-We are finally ready to see what makes the shell such a powerful programming environment.
-We are going to take the commands we repeat frequently and save them in files
-so that we can re-run all those operations again later by typing a single command.
+# INTRO
+- Up to this point we've learned how to get around and run basic commands- but we have been limited to the commands built into the bash environment.
+- When we want to use many commands and in a specific order, we can add the commands and loops to a text file and ask bash to run everything line by line- which should result in the same outcome every time.
+- This is what a basic bash or **shell script** is: multiple lines of bash commands and makes bash a powerful and flexible programming environment.
+- We could save save everything together so that we can re-run all those operations again later by typing a single command.
 
+# START
 
+We will start by making a shell script in the folder containing the data that it will be used for.
 
-For historical reasons,
-a bunch of commands saved in a file is usually called a **shell script**,
-but make no mistake:
-these are actually small programs.
+Change directories to `molecules/` and creating a new file, `middle.sh`.
 
-Let's start by going back to `molecules/` and creating a new file, `middle.sh` which will
-become our shell script:
+In the shell-novice folder:
 
 ~~~
 $ cd molecules
@@ -54,10 +53,15 @@ cd $HOME/shell-novice/data-shell/molecules
 ```
 
 The command `vim middle.sh` opens the file `middle.sh` within the text editor 'vim'
-(which runs within the shell). In vim, hit 'i' to begin typing.
-If the file does not exist, vim and nano create it. If it does exist, you can edit the file.
-We can use the text editor to directly edit the file -- we'll simply insert head and tail
-commands that will output the middle of a file:
+(which runs within the shell).
+
+- If the file does not exist, vim and nano create it.
+- If it does exist, you can edit the file.
+- In vim, hit 'i' to begin typing.
+
+We will insert commands that we are familiar with: head and tail.
+
+We will write our shell script to use these commands to output the middle of a file.
 
 ~~~
 head -n 15 octane.pdb | tail -n 5
@@ -69,17 +73,18 @@ it selects lines 11-15 of the file `octane.pdb`.
 Remember, we are *not* running it as a command just yet:
 we are putting the commands in a file.
 
-Then we save the file by
+Then we save the file in vim by:
 1. hitting escape
 2. then `Shift-:` to tell vim that we are passing commands rather than typing,
 3. and type `wq` and hitting enter
+
+
 Check that the directory `molecules` now contains a file called `middle.sh`.
 
-If this didn't go well, you can use:
+If this didn't go well and you are not in vim, you can use:
 echo 'head -n 15 octane.pdb | tail -n 5' > middle.sh
 
-Once we have saved the file,
-we can ask the shell to execute the commands it contains.
+Once we have saved the file,we can ask the shell to execute the commands it contains.
 Our shell is called `bash`, so we run the following command:
 
 ~~~
@@ -96,16 +101,15 @@ ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
 ~~~
 {: .output}
 
-Sure enough,
-our script's output is exactly what we would get if we ran that pipeline directly.
+- New macs might use a more recent version of shell, called zsh. But bash should still work
 
+When you call the `bash` command, terminal is running the script in the first position in a bash environment that knows all of the bash commmands
 
-
-What if we want to select lines from a different file?
-We could edit `middle.sh` each time to change the filename,
+If we want to select lines from a different,
+ee could edit `middle.sh` each time to change the filename,
 but that would probably take longer than typing the command out again
 in the shell and executing it with a new file name.
-Instead, edit `middle.sh` and make it more versatile:
+Instead, edit `middle.sh` and make it more versatile, and accept a user designated file instead:
 
 ~~~
 $ vim middle.sh
@@ -162,11 +166,11 @@ ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
 
 We still need to edit `middle.sh` each time we want to adjust the range of lines,
 though.
-Let's fix that by using the special variables `$2` and `$3` for the
+Let's fix that by using the special variables `$2` and `$3` to stand in for the
 number of lines to be passed to `head` and `tail` respectively:
 
 ~~~
-$ nano middle.sh
+$ vim middle.sh
 ~~~
 {: .language-bash}
 
@@ -208,9 +212,9 @@ TER      18              1
 ~~~
 {: .output}
 
-This works,
-but it may take the next person who reads `middle.sh` a moment to figure out what it does.
-We can improve our script by adding some **comments** at the top:
+This works, but you need to remember which positions are passed to which command
+
+We can improve the utility of our script by adding some **comments** at the top.
 
 ~~~
 $ vim middle.sh
@@ -218,21 +222,18 @@ $ vim middle.sh
 {: .language-bash}
 
 ~~~
-# Select lines from the middle of a file.
+# Selects lines from the middle of a file.
 # Usage: bash middle.sh filename end_line num_lines
 head -n "$2" "$1" | tail -n "$3"
 ~~~
 {: .output}
 
 A comment starts with a `#` character and runs to the end of the line.
-The computer ignores comments,
+The bash ignores comments,
 but they're invaluable for helping people (including your future self) understand and use scripts.
 The only caveat is that each time you modify the script,
-you should check that the comment is still accurate:
-an explanation that sends the reader in the wrong direction is worse than none at all.
+you should check that the comment is still accurate
 
-What if we want to process many files in a single pipeline?
-For example, if we want to sort our `.pdb` files by length, we would type:
 
 ~~~
 $ wc -l *.pdb | sort -n
@@ -240,20 +241,30 @@ $ wc -l *.pdb | sort -n
 {: .language-bash}
 
 because `wc -l` lists the number of lines in the files
-(recall that `wc` stands for 'word count', adding the `-l` option means 'count lines' instead)
+(`wc` stands for 'word count', adding the `-l` option means 'count lines' instead)
 and `sort -n` sorts things numerically.
 We could put this in a file,
 but then it would only ever sort a list of `.pdb` files in the current directory.
-If we want to be able to get a sorted list of other kinds of files,
-we need a way to get all those names into the script.
-We can't use `$1`, `$2`, and so on
+
+
+If we want it to work on any number of files, we can't use `$1`, `$2`, and so on
 because we don't know how many files there are.
+
+So we need a way to get our bash script to look for any number of positional arguments passed to the script.
+
+
 Instead, we use the special variable `$@`,
 which means,
 'All of the command-line arguments to the shell script'.
-We also should put `$@` inside double-quotes
-to handle the case of arguments containing spaces
-(`"$@"` is special syntax and is equivalent to `"$1"` `"$2"` ...).
+
+Many built in bash commands were written to any number of positional arguments (to an extent)
+
+And remember, positional arguments are different than options that are flagged such as `ls -a`.
+
+For these commands, we often use a bash special variables, such as astrix, glob, star to expand to matching files in the directory.
+
+To get our shell script aware of the possibility of many arguments, We put `$@` inside double-quotes
+to each argument with a space between each. (`"$@"` is special syntax and is equivalent to `"$1"` `"$2"` ...).
 
 Here's an example:
 
@@ -274,6 +285,10 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 ~~~
 {: .language-bash}
 
+With the above line, each position $1 and $2 is expanded to match each file that it matches.
+
+The order of files is also respected.
+
 ~~~
 9 methane.pdb
 12 ethane.pdb
@@ -288,10 +303,9 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 ~~~
 {: .output}
 
+And now, calling our own bash scripts is getting more complex. And you might not remember the order of your positional arguments.
 
-Generating files or figures often require a couple lines of commands, and maybe your figure looks great, but you can't remember how it happened. You can make a bash script from the series of commands that did something useful --- for example, to save the commands in a file.
-Instead of typing them in again
-(and potentially getting them wrong)
+Instead of typing them in again (and potentially doing something differently)
 we can do this:
 
 ~~~
@@ -314,17 +328,16 @@ After a moment's work in an editor to remove the serial numbers on the commands,
 and to remove the final line where we called the `history` command,
 we have a completely accurate record of how we created the file.
 
+You might even be able to knock out that first column that prevents the file from being a working bash script
+
 In practice, most people develop shell scripts by running commands at the shell prompt a few times
 to make sure they're doing the right thing,
-then saving them in a file for re-use.
-This style of work allows people to recycle
-what they discover about their data and their workflow with one call to `history`
-and a bit of editing to clean up the output
-and save it as a shell script.
+then saving them in a file for re-use, and then debugging it line-by-line if needed
+
 
 ## Pipeline: Creating a Script
 
-When your data analysis pipeline requires some lines of bash code, you want to make text files of that code to make it reproducible. The easiest way to capture all the steps is in a script.
+Once you have a few shell scripts that are required for an analysis, you'll want to make text files of that code to make it reproducible. The easiest way to capture all the steps is in a script.
 
 First change directories to the gyre data folder:
 ```
@@ -377,10 +390,21 @@ done
 {: .language-bash}
 
 The advantage is that this always selects the right files:
-she doesn't have to remember to exclude the 'Z' files.
+and do not have to remember to exclude the 'Z' files.
 The disadvantage is that it *always* selects just those files and it can't run on all files
-(including the 'Z' files),
-without editing the script.
+(including the 'Z' files),without editing the script.
+
 To be even more reusable and portable, the script can be written to check for command-line arguments,
-and use `NENE*[AB].txt` if none were provided.
+and use `NENE*[AB].txt` if none were provided. (if statement)
 Of course, this introduces another tradeoff between flexibility and complexity.
+
+In this lesson, we
+- "Wrote a basic shell script that ran on a single file name"
+- "We ran that shell script from the command line with the bash command"
+- "We then added the ability to pass positional arguments to the script with $1 and $2"
+- "Made a script with a flexible number of positional parameters with `$@` and wildcard/glob"
+- "We saved commands and history to text"
+- "And remember to use quotes to carefully expand variables"
+
+Next would be the final lesson of 'intro to unix'- which is focused on find and grep.
+---
