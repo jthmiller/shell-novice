@@ -422,8 +422,7 @@ For this lesson, we
 - "Made a script with a flexible number of positional parameters with `$@` and wildcard/glob"
 - "We saved commands and history to text"
 - "And remember to use quotes to carefully expand variables"
-
-Next would be the final lesson of 'intro to unix'- which is focused on find and grep.
+- "Next would be the final lesson of 'intro to unix'- which is focused on find and grep."
 
 
 ---
